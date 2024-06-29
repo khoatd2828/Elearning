@@ -9,7 +9,6 @@ const { Search } = Input;
 
 
 export const SearchAdmin = ({ name }) => {
-    // console.log(keySearch)
     const { searchParma } = useSelector((state) => state.quanLyKhoaHocAdmin)
     const [searchParam, setSearchParam] = useSearchParams()
     const dispatch = useDispatch()

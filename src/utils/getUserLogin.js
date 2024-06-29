@@ -8,7 +8,6 @@ export const getUserLogin = () => {
     try {
         return JSON.parse(userLogin);
     } catch (error) {
-        console.error("Error parsing localStorage data:", error);
         return null; // Trả về null nếu không thể phân tích cú pháp dữ liệu thành JSON
     }
 };

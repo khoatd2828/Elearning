@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { quanLyKhoaHocThunkAction } from '../../../store/QuanLyKhoaHocAdmin';
 import { TableAddKhoaHoc } from './TableAdminKhoaHoc';
-// import { QlUser } from './QlUser';
-// import { TableAddUser } from './AddUser/TableAddUser';
+import { toast } from 'react-toastify';
+
 
 export const ModalAddKhoahoc = ({ ds }) => {
 
     const { handleSubmit, control, setValue } = useForm({
         defaultValues: {
             maKhoaHoc: '',
-            taiKhoan: ds.taiKhoan, // Set default value for taiKhoan
+            taiKhoan: ds.taiKhoan, 
         }
     });
 
@@ -51,6 +51,18 @@ export const ModalAddKhoahoc = ({ ds }) => {
             taiKhoan: data.taiKhoan
         }
         ))
+            .unwrap()
+            .then(() => {
+                toast.success("Ghi danh người dùng thành công!");
+                dispatch(quanLyKhoaHocThunkAction.quanLyKhoaHocChuaGhiDanh(data.taiKhoan))
+                dispatch(quanLyKhoaHocThunkAction.quanLyKhoaHocChoGhiDanh(data.taiKhoan))
+                dispatch(quanLyKhoaHocThunkAction.quanLyKhoaHocDaGhiDanh(data.taiKhoan))
+
+            })
+            .catch((error) => {
+                console.error('Ghi danh người dùng thất bại:', error);
+                toast.error("Ghi danh người dùng thất bại");
+            });
 
     };
 
@@ -70,7 +82,7 @@ export const ModalAddKhoahoc = ({ ds }) => {
                 </form>
             </Popover>
             <Modal
-                title="Ghi danh người dùng"
+                title="Ghi danh khoá học"
                 style={{ top: 20, }}
                 open={isModalOpen}
                 onOk={handleOk}
@@ -80,7 +92,7 @@ export const ModalAddKhoahoc = ({ ds }) => {
                 <div >
 
                     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-between border-b-4 border-black pb-5">
-                        <h1 className="text-[20px] font-bold">Chọn người dùng</h1>
+                        <h1 className="text-[20px] font-bold">Chọn khoá học</h1>
                         <Controller
                             name="maKhoaHoc"
                             control={control}
@@ -112,6 +124,7 @@ export const ModalAddKhoahoc = ({ ds }) => {
                 <div>
                     <TableAddKhoaHoc dsKhoaHocChoGhiDanh={dsKhoaHocChoGhiDanh}
                         taiKhoan={ds.taiKhoan}
+                        title='Khoá học chờ xác thực'
                     />
 
 
@@ -119,6 +132,7 @@ export const ModalAddKhoahoc = ({ ds }) => {
                 <div>
                     <TableAddKhoaHoc dsKhoaHocChoGhiDanh={dsKhoaHocDaGhiDanh}
                         taiKhoan={ds.taiKhoan}
+                        title='Khoá học đã xác thực'
                     />
                 </div>
             </Modal>

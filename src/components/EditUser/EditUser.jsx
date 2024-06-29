@@ -41,7 +41,6 @@ export const EditUser = () => {
       email: data.email,
     };
 
-    console.log(formData);
     dispatch(editUserThunk(formData));
   };
 

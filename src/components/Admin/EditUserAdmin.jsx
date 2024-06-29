@@ -11,7 +11,6 @@ import { PATH } from "../../constant/config";
 
 export const EditUserAdmin = () => {
   const { state: user } = useLocation();
-  console.log(user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {

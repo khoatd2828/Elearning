@@ -31,17 +31,24 @@ export const QuanLyKhoaHocService = {
             return response
         }
         catch (err) {
-            console.log('post err', err)
         }
     },
-    deleteKhoaHoc: (maKhoaHoc) => {
-        axios.delete(`https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`,
-            {
-                headers: {
-                    TokenCybersoft: TOKENCYBERSOFT,
-                    'Authorization': 'Bearer ' + getAuthToken(),
-                },
-            })
+    deleteKhoaHoc: async (maKhoaHoc) => {
+        try {
+            const result = await axios.delete(`https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`,
+                {
+                    headers: {
+                        TokenCybersoft: TOKENCYBERSOFT,
+                        'Authorization': 'Bearer ' + getAuthToken(),
+                    },
+                })
+            return result
+        }
+        catch (error) {
+            return error
+
+        }
+
 
     },
     putKhoaHoc: (formData) => {
@@ -56,7 +63,6 @@ export const QuanLyKhoaHocService = {
             return response
         }
         catch (err) {
-            console.log('post err', err)
         }
 
     },
@@ -68,11 +74,9 @@ export const QuanLyKhoaHocService = {
                         TokenCybersoft: TOKENCYBERSOFT,
                     },
                 })
-            console.log('result ma', result)
             return result.data
         }
         catch (error) {
-            console.log(error)
         }
     },
     postNguoiDungChuaGhiDanh: async (maKhoaHoc) => {
@@ -85,7 +89,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postNguoiDungChuaGhiDanh', response)
             return response
         }
         catch (err) {
@@ -102,7 +105,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postNguoiDungChoGhiDanh', response)
             return response
         }
         catch (err) {
@@ -119,7 +121,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postNguoiDungDaGhiDanh', response)
             return response
         }
         catch (err) {
@@ -136,7 +137,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postGhiDanhNguoiDung', response)
             return response
         }
         catch (err) {
@@ -153,7 +153,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('deleteGhiDanhNguoiDung', response)
             return response
         }
         catch (err) {
@@ -170,7 +169,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postGhiDanhKhoaHoc', response)
             return response
         }
         catch (err) {
@@ -187,7 +185,6 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            console.log('postKhoaHocChoGhiDanh', response)
             return response
         }
         catch (err) {
@@ -204,7 +201,7 @@ export const QuanLyKhoaHocService = {
                     }
                 }
             )
-            // console.log('postKhoaHocDaGhiDanh', response)
+
             return response
         }
         catch (err) {
