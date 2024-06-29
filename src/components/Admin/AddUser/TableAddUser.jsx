@@ -20,12 +20,9 @@ const { Title } = Typography;
 const { Search } = Input;
 
 
-export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKhoaHoc }) => {
-    // console.log(maKhoaHoc)
-    // const { data: userData } = dsNguoiDungDaGhiDanh
+export const TableAddUser = ({ dsNguoiDungChoGhiDanh, maKhoaHoc, title }) => {
     const { loading } = useSelector((state) => state.quanLyKhoaHocAdmin);
     const { data: userData } = dsNguoiDungChoGhiDanh;
-
 
     const [filteredData, setFilteredData] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -60,6 +57,8 @@ export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKh
 
     const fetchUserData = () => {
         dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungChoGhiDanh(maKhoaHoc));
+        dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungChuaGhiDanh(maKhoaHoc))
+        dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungDaGhiDanh(maKhoaHoc))
     };
     const showDeleteConfirm = (record) => {
         Modal.confirm({
@@ -93,15 +92,18 @@ export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKh
         dispatch(quanLyKhoaHocThunkAction.quanLyGhiDanhNguoiDung({
             maKhoaHoc: maKhoaHoc,
             taiKhoan: record.taiKhoan
-        })).then((action) => {
-            if (quanLyKhoaHocThunkAction.quanLyGhiDanhNguoiDung.fulfilled.match(action)) {
+        }))
+            .unwrap()
+            .then(() => {
                 toast.success("Ghi danh người dùng thành công!");
                 fetchUserData();
-            } else {
+            })
+            .catch((error) => {
+                console.error('Ghi danh người dùng thất bại:', error);
                 toast.error("Ghi danh người dùng thất bại");
-            }
-        });
+            });
     };
+
 
     const columns = [
         {
@@ -116,16 +118,6 @@ export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKh
             dataIndex: "hoTen",
             key: "hoTen",
             sorter: (a, b) => a.hoTen.localeCompare(b.hoTen),
-        },
-        {
-            title: "Email",
-            dataIndex: "email",
-            key: "email",
-        },
-        {
-            title: "Số Điện Thoại",
-            dataIndex: "soDt",
-            key: "soDt",
         },
         {
             title: "Mã Loại Người Dùng",
@@ -150,12 +142,15 @@ export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKh
             width: 100,
             render: (text, record) => (
                 <div style={{ display: "flex", gap: "10px" }}>
-                    <Button
+                    {
+                        title === 'Học viên chờ xác thực' && <Button
                         onClick={() => handleAddUser(record)}
 
                     >
                         Ghi danh
                     </Button>
+                    }
+
                     <Button
 
                         icon={<DeleteOutlined />}
@@ -181,7 +176,7 @@ export const TableAddUser = ({ dsNguoiDungChoGhiDanh, dsNguoiDungDaGhiDanh, maKh
                     }}
                 >
                     <Title level={3} style={{ margin: 0 }}>
-                        Học viên chờ xác thực
+                        {title}
                     </Title>
                     <div className="flex gap-5">
                         <Search

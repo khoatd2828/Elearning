@@ -27,8 +27,8 @@ export const quanLyKhoaHocPost = createAsyncThunk('QuanLyKhoaHocAdmin / quanLyKh
             return result
         }
         catch (error) {
-            // console.log(rejectWithValue(error))
-            return rejectWithValue(err);
+
+            return rejectWithValue(error);
         }
 
     }
@@ -37,12 +37,14 @@ export const quanLyKhoaHocPost = createAsyncThunk('QuanLyKhoaHocAdmin / quanLyKh
 export const quanLyKhoaHocDelete = createAsyncThunk('QuanLyKhoaHocAdmin / quanLyKhoaHocDeleteThunk',
     async (payload, { rejectWithValue }) => {
         try {
-            // console.log(payload);
+
             const result = await QuanLyKhoaHocService.deleteKhoaHoc(payload)
             return result
         }
         catch (err) {
-            return rejectWithValue(err)
+            throw err
+            // return rejectWithValue(err)
+
         }
 
     }
@@ -106,8 +108,7 @@ export const quanLyNguoiDungDaGhiDanh = createAsyncThunk('QuanLyKhoaHocAdmin/qua
     async (payload, { rejectWithValue }) => {
         try {
             const result = await QuanLyKhoaHocService.postNguoiDungDaGhiDanh(payload)
-            // console.log('quanLyNguoiDungDaGhiDanh', payload)
-
+           
             return result
         }
         catch (err) {
@@ -118,10 +119,8 @@ export const quanLyNguoiDungDaGhiDanh = createAsyncThunk('QuanLyKhoaHocAdmin/qua
 export const quanLyGhiDanhNguoiDung = createAsyncThunk('QuanLyKhoaHocAdmin/quanLyGhiDanhNguoiDung',
     async (payload, { rejectWithValue }) => {
         try {
-            const result = await QuanLyKhoaHocService.postGhiDanhNguoiDung(payload)
-            // console.log('quanLyNguoiDungDaGhiDanh', payload)
-
-            return result
+            const response = await QuanLyKhoaHocService.postGhiDanhNguoiDung(payload)
+            return response
         }
         catch (err) {
             return rejectWithValue(err)
@@ -132,7 +131,7 @@ export const quanLyKhoaHocChuaGhiDanh = createAsyncThunk('QuanLyKhoaHocAdmin/qua
     async (payload, { rejectWithValue }) => {
         try {
             const response = await QuanLyKhoaHocService.postKhoaHocChuaGhiDanh(payload)
-            // console.log('quanLyNguoiDungDaGhiDanh', payload)
+
 
             return response
         }
@@ -145,7 +144,6 @@ export const quanLyHuyDanhNguoiDung = createAsyncThunk('QuanLyKhoaHocAdmin/quanL
     async (payload, { rejectWithValue }) => {
         try {
             const response = await QuanLyKhoaHocService.deleteGhiDanhNguoiDung(payload)
-            // console.log('quanLyNguoiDungDaGhiDanh', payload)
 
             return response
         }
@@ -158,7 +156,7 @@ export const quanLyKhoaHocChoGhiDanh = createAsyncThunk('QuanLyKhoaHocAdmin/quan
     async (payload, { rejectWithValue }) => {
         try {
             const response = await QuanLyKhoaHocService.postKhoaHocChoGhiDanh(payload)
-            // console.log('postKhoaHocChoGhiDanh', payload)
+
 
             return response
         }

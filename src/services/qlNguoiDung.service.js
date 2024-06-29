@@ -37,7 +37,6 @@ export const qlNguoiDungServices = {
 
       return payload;
     } catch (error) {
-      console.error("Error edit user:", error);
       throw error;
     }
   },
@@ -58,7 +57,6 @@ export const qlNguoiDungServices = {
 
     return payload;
   } catch (error) {
-    console.error("Error add user:", error);
     throw error;
   }
   },

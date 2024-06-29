@@ -6,6 +6,7 @@ import { quanLyKhoaHocThunkAction } from '../../store/QuanLyKhoaHocAdmin';
 import { useForm, Controller } from 'react-hook-form';
 import { QlUser } from './QlUser';
 import { TableAddUser } from './AddUser/TableAddUser';
+import { toast } from 'react-toastify';
 
 export const ModalAdmin = ({ ds }) => {
     const { handleSubmit, control, setValue } = useForm({
@@ -50,7 +51,18 @@ export const ModalAdmin = ({ ds }) => {
             taiKhoan: data.taiKhoan
         }
         ))
-        reset({ maKhoaHoc: ds.maKhoaHoc, taiKhoan: '' });
+            .unwrap()
+            .then(() => {
+                toast.success("Ghi danh người dùng thành công!");
+                dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungChuaGhiDanh(data.maKhoaHoc))
+                dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungChoGhiDanh(data.maKhoaHoc))
+                dispatch(quanLyKhoaHocThunkAction.quanLyNguoiDungDaGhiDanh(data.maKhoaHoc))
+            })
+            .catch((error) => {
+                console.error('Ghi danh người dùng thất bại:', error);
+                toast.error("Ghi danh người dùng thất bại");
+            });
+      
     };
 
     return (
@@ -112,12 +124,14 @@ export const ModalAdmin = ({ ds }) => {
                 <div>
                     <TableAddUser dsNguoiDungChoGhiDanh={dsNguoiDungChoGhiDanh}
                         maKhoaHoc={ds.maKhoaHoc}
+                        title='Học viên chờ xác thực'
                     />
 
 
                 </div>
                 <div>
-                    <TableAddUser dsNguoiDungChoGhiDanh={dsNguoiDungDaGhiDanh}  maKhoaHoc={ds.maKhoaHoc}/>
+                    <TableAddUser dsNguoiDungChoGhiDanh={dsNguoiDungDaGhiDanh} maKhoaHoc={ds.maKhoaHoc}
+                        title='Học viên đã xác thực' />
                 </div>
             </Modal>
         </div>

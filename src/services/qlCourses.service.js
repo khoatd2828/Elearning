@@ -14,7 +14,6 @@ export const quanLyCoursesServices = {
       );
       return response;
     } catch (error) {
-      console.error("Error fetching courses list:", error);
     }
   },
 
