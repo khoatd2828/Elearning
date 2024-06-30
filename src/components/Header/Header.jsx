@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ModalAuth } from "../Modal/ModalAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button, Popover } from "antd";
@@ -9,7 +9,6 @@ import "./header.css";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 import { PATH } from "../../constant/config";
-import { UserOutlined } from "@ant-design/icons";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,26 +30,6 @@ export const Header = () => {
     dispatch(quanLyNguoiDungActions.logOut());
     toast.success("Bạn đã đăng xuất thành công!");
     navigate(PATH.home);
-  };
-
-  useEffect(() => {
-
-    if (!userLogin || userLogin.payload.maLoaiNguoiDung !== "GV") {
-      return;
-    }
-
-
-    const adminButton = document.getElementById("adminButton");
-
-    if (adminButton) {
-      adminButton.style.display = "block";
-    }
-  }, [userLogin]);
-
-
-  const handleAdminClick = () => {
-
-    navigate(PATH.homeadmin);
   };
 
   return (
@@ -99,42 +78,29 @@ export const Header = () => {
         {/* button */}
         <div className="flex flex-row items-center justify-center gap-4">
           {userLogin ? (
-            <>
-              <Popover
-                placement="bottom"
-                title={`Xin chào, ${userLogin.payload.hoTen}`}
-                content={
-                  <div className="flex flex-col">
-                    <NavLink
-                      className="text-red-500 italic mb-2 underline cursor-pointer hover:text-red-300"
-                      to={PATH.detail}
-                    >
-                      Thông tin cá nhân
-                    </NavLink>
-                    <button className="logout-button" onClick={handleLogout}>
-                      Đăng xuất
-                    </button>
-                  </div>
-                }
-                trigger="click"
-              >
-                <div className="flex items-center gap-2 font-bold me-3 md:me-0">
-                  <Avatar size={"large"} icon={<UserIcon />} />
-                  <div className="lg:block hidden">{userLogin.payload.hoTen}</div>
+            <Popover
+              placement="bottom"
+              title={`Xin chào, ${userLogin.payload.hoTen}`}
+              content={
+                <div className="flex flex-col">
+                  <NavLink
+                    className="text-red-500 italic mb-2 underline cursor-pointer hover:text-red-300"
+                    to={PATH.detail}
+                  >
+                    Thông tin cá nhân
+                  </NavLink>
+                  <button className="logout-button" onClick={handleLogout}>
+                    Đăng xuất
+                  </button>
                 </div>
-
-              </Popover>
-              {userLogin && userLogin.payload.maLoaiNguoiDung === "GV" && (
-                <Button
-                  id="adminButton"
-                  className="admin-button"
-                  icon={<UserOutlined />}
-                  onClick={handleAdminClick}
-                >
-                  Admin
-                </Button>
-              )}
-            </>
+              }
+              trigger="click"
+            >
+              <div className="flex items-center gap-2 font-bold me-3 md:me-0">
+                <Avatar size={"large"} icon={<UserIcon />} />
+                <div className="lg:block hidden">{userLogin.payload.hoTen}</div>
+              </div>
+            </Popover>
           ) : (
             <div className="wap">
               <Popover
@@ -142,13 +108,13 @@ export const Header = () => {
                 content={
                   <div className="flex flex-col md:w-[220px] gap-2 font-bold">
                     <button
-                      className="bg-[orange] md:w-full w-[100px] text-white font-700 text-sm rounded-lg py-1.5 h-[35px]"
+                      className="bg-[orange] md:w-full w-[100px] text-white font-700 text-sm rounded-lg py-1.5 h-[35px] hover-gradient-login"
                       onClick={() => openAuthModal("login")}
                     >
                       <div>Đăng nhập</div>
                     </button>
                     <button
-                      className="bg-green-700 md:w-full w-[100px] text-white font-700 text-sm rounded-lg py-1.5 h-[35px]"
+                      className="bg-green-700 md:w-full w-[100px] text-white font-700 text-sm rounded-lg py-1.5 h-[35px] hover-gradient-register"
                       onClick={() => openAuthModal("register")}
                     >
                       <div>Đăng ký</div>
@@ -168,9 +134,9 @@ export const Header = () => {
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                       <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
                         d="M4 6h16M4 12h16M4 18h16"
                       ></path>
                     </svg>
@@ -178,15 +144,15 @@ export const Header = () => {
                 </div>
               </Popover>
 
-              <div className="hidden md:flex flex-row w-[220px] gap-2 font-bold absolute md:static">
+              <div className="hidden md:flex flex-row w-[220px] gap-2 font-bold absolute md:static md:pe-2">
                 <button
-                  className="bg-[orange] w-full text-white font-700 text-sm rounded-lg py-1.5 h-[35px]"
+                  className="bg-[orange] w-full text-white font-700 text-sm rounded-lg py-1.5 h-[35px] hover-gradient-login"
                   onClick={() => openAuthModal("login")}
                 >
                   <div>Đăng nhập</div>
                 </button>
                 <button
-                  className="bg-green-700 w-full text-white font-700 text-sm rounded-lg py-1.5 h-[35px]"
+                  className="bg-green-700 w-full text-white font-700 text-sm rounded-lg py-1.5 h-[35px] hover-gradient-register"
                   onClick={() => openAuthModal("register")}
                 >
                   <div>Đăng ký</div>

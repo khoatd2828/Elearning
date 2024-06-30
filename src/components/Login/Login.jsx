@@ -1,10 +1,9 @@
 // Login.js
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect } from "react";
 import { loginThunk } from "../../store/User/thunk";
 import { toast } from "react-toastify";
 
@@ -13,7 +12,6 @@ export const Login = ({ onSwitchToRegister, onClose }) => {
     border dark:border-slate-700 dark:focus:border-slate-400 
     focus:border-slate-400 border-slate-200`;
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isFetchingLogin, isFetchingRegister, userLogin } = useSelector(
     (state) => state.quanLyNguoiDung
@@ -30,8 +28,10 @@ export const Login = ({ onSwitchToRegister, onClose }) => {
     dispatch(loginThunk(value))
       .unwrap()
       .then(() => {
-        alert("Đăng nhập tài khoản thành công!");
-        window.location.reload();
+        toast.success('Đăng nhập thành công!')
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000)
       })
       .catch((error) => {
         toast.error(

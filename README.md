@@ -1,5 +1,10 @@
 # IIG Learning - ReactJS Typescript Project
 
+- Link quay youtube của dự án:
+
+- Link deploy dự án: https://elearning-lovat.vercel.app/
+
+
 ## Module người dùng
 
 -   1 - Lấy danh sách , tìm kiếm khóa học - done
@@ -56,3 +61,13 @@
 -   TrangQuanLyThongTinNguoiDung (Chỉnh sửa, thêm người dùng)
 
 ### Responsive cho 4 màn hình
+
+- Màn hình lớn
+- Màn hình Ipad
+- Màn hình iphone 6,7 plus
+- Màn hình iphone 6, 7
+
+-----------------------------------------------------------------------------------------
+
+
+
