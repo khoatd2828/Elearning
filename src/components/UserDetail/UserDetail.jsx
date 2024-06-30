@@ -15,11 +15,11 @@ export const UserDetail = () => {
   const { data: userInfo } = useGetDetailUser();
   const { userLogin } = useSelector((state) => state.quanLyNguoiDung);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 4; 
+  const pageSize = 4;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -38,10 +38,10 @@ export const UserDetail = () => {
     const payload = {
       maKhoaHoc: selectedCourse.maKhoaHoc,
       taiKhoan: userLogin.payload.taiKhoan,
-    }
+    };
 
     dispatch(deleteCoursesThunk(payload));
-    navigate(PATH.home)
+    navigate(PATH.home);
   };
 
   return (
@@ -58,27 +58,37 @@ export const UserDetail = () => {
             </p>
             <p className="text-lg">
               {" "}
-              {/* Làm lớn hơn */}
               <strong className="font-semibold">Họ tên:</strong>{" "}
               {userInfo?.hoTen}
             </p>
             <p className="text-lg">
               {" "}
-              {/* Làm lớn hơn */}
               <strong className="font-semibold">Số điện thoại:</strong>{" "}
               {userInfo?.soDT}
             </p>
-            <p className="text-lg">
+            <p className="text-lg flex">
               {" "}
-              {/* Làm lớn hơn */}
-              <strong className="font-semibold">Loại người dùng:</strong>{" "}
+              <strong className="font-semibold me-1">Loại người dùng:</strong>{" "}
               {userInfo?.maLoaiNguoiDung}
+              {userInfo?.maLoaiNguoiDung === "GV" && (
+                <div className="ms-2">
+                  <span>-</span>
+                  <NavLink to={PATH.homeadmin} className="ml-2 bg-[#032343] hover:bg-[#224363] text-white py-2 px-5 rounded font-bold">
+                    Admin
+                  </NavLink>
+                </div>
+              )}
             </p>
           </div>
         </div>
       </div>
 
-      <button className="btn bg-orange-500 hover:bg-orange-700 lg:ms-[205px] ms-[20px]" onClick={() => navigate(PATH.edituser)}>Chỉnh sửa thông tin cá nhân</button>
+      <button
+        className="btn bg-orange-500 hover:bg-orange-700 lg:ms-[205px] ms-[20px]"
+        onClick={() => navigate(PATH.edituser)}
+      >
+        Chỉnh sửa thông tin cá nhân
+      </button>
 
       <div className="container mx-auto p-5">
         <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
@@ -86,7 +96,7 @@ export const UserDetail = () => {
             Khóa học đã ghi danh
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-6">
-              {userCourses.slice(startIndex, endIndex).map((course) => (
+            {userCourses.slice(startIndex, endIndex).map((course) => (
               <div
                 key={course.maKhoaHoc}
                 className="bg-white rounded-lg shadow-md"
@@ -118,9 +128,13 @@ export const UserDetail = () => {
                       <strong className="text-gray-700">Đánh giá:</strong>{" "}
                       {course.danhGia}
                     </p>
-                    <button className="btn-detail" onClick={() => handleDeleteClick(course)}>Hủy khóa học</button>
+                    <button
+                      className="btn-detail"
+                      onClick={() => handleDeleteClick(course)}
+                    >
+                      Hủy khóa học
+                    </button>
                   </div>
-                  
                 </div>
               </div>
             ))}
